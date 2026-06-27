@@ -1,6 +1,8 @@
 # Packy
 
-Packy is a local-first AI package management system with an elephant theme. The project is currently a public static project page plus agent operating notes; implementation code should preserve the local-first promise as it lands.
+Packy is an early local-first desktop AI friend for safer software installs. The intended product is a dock/tray companion that helps users inspect package-manager commands, installers, scripts, and software supply-chain risk before approving risky steps.
+
+The current repository is still a static GitHub Pages site plus agent operating notes. Do not describe install-watching, package verification, command execution, signature checks, or blocking behavior as shipped until implementation code exists.
 
 ## Project Site
 
@@ -11,6 +13,13 @@ Production URL: <https://packy.bot/>
 Primary logo asset: [assets/packy-elephant-logo.png](assets/packy-elephant-logo.png)
 
 Preview locally by opening `index.html` in a browser.
+
+## Product Direction
+
+- Desktop companion first: Packy should feel like a local dock/tray friend, not a CLI-first tool.
+- Local-first by default: install history, package lists, shell commands, and machine state should stay on device unless the user opts in.
+- Security-conscious: Packy should warn about remote shell installers, unsigned binaries, global npm installs, pip-as-root, typosquatting, suspicious postinstall scripts, new services/daemons, PATH edits, and risky dependency chains.
+- Honest status: public copy should use "planned", "designed to", "aims to", or "early direction" for capabilities that are not implemented.
 
 ## Agent Setup
 

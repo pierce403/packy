@@ -13,8 +13,9 @@ Start here, then search indexed memory before important Packy work.
 
 ## Notes
 
-- 2026-06-27: Packy starts as a static GitHub Pages project page for a local-first AI package management system with an elephant theme.
+- 2026-06-27: Packy originally had a quick static GitHub Pages placeholder that described it too generically as a local-first AI package management system.
 - 2026-06-27: Primary site logo is `assets/packy-elephant-logo.png`, generated with the Codex image generator and processed as a transparent PNG.
+- 2026-06-27: The original generic "AI package management system" landing page was misleading. The real Packy direction is a local-first desktop/dock AI package-safety companion that helps users inspect software installs, package-manager commands, installer scripts, and supply-chain risk before approving risky steps.
 
 ## People
 

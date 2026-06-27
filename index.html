@@ -3,28 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Packy - Local-first AI Package Management</title>
-  <meta name="description" content="Packy is a local-first AI package management system with an elephant theme.">
+  <title>Packy - Safer Software Installs</title>
+  <meta name="description" content="Packy is an early local-first desktop AI friend for safer software installs.">
   <link rel="canonical" href="https://packy.bot/">
   <link rel="icon" type="image/png" href="assets/packy-elephant-logo.png">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Packy">
-  <meta property="og:description" content="A local-first AI package management system with durable manifests and user-owned state.">
+  <meta property="og:description" content="A local desktop AI friend designed to help you install software without getting owned.">
   <meta property="og:image" content="https://packy.bot/assets/packy-elephant-logo.png">
-  <meta name="theme-color" content="#f8f3e8">
+  <meta name="theme-color" content="#f6f1e8">
   <style>
     :root {
-      --ink: #19232f;
-      --muted: #5e6874;
+      --ink: #121821;
+      --muted: #5c6673;
       --paper: #fffaf0;
-      --canvas: #f4f1e8;
-      --line: #d9d1c2;
-      --slate: #40556b;
-      --moss: #557b4f;
-      --amber: #c98525;
-      --coral: #c9583d;
-      --sky: #5c88a6;
-      --shadow: 0 22px 60px rgba(34, 43, 54, 0.14);
+      --canvas: #f6f1e8;
+      --panel: #ffffff;
+      --line: #d8d0c2;
+      --code: #141b24;
+      --risk: #b44733;
+      --amber: #c8832f;
+      --moss: #486f56;
+      --blue: #346b86;
+      --violet: #665b91;
+      --shadow: 0 22px 70px rgba(25, 32, 42, 0.13);
     }
 
     * {
@@ -38,11 +40,11 @@
     body {
       margin: 0;
       background:
-        linear-gradient(90deg, rgba(64, 85, 107, 0.08) 1px, transparent 1px) 0 0 / 42px 42px,
-        linear-gradient(0deg, rgba(85, 123, 79, 0.07) 1px, transparent 1px) 0 0 / 42px 42px,
+        linear-gradient(90deg, rgba(52, 107, 134, 0.08) 1px, transparent 1px) 0 0 / 44px 44px,
+        linear-gradient(0deg, rgba(72, 111, 86, 0.07) 1px, transparent 1px) 0 0 / 44px 44px,
         var(--canvas);
       color: var(--ink);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       line-height: 1.6;
     }
 
@@ -50,11 +52,24 @@
       content: "";
       display: block;
       height: 8px;
-      background: linear-gradient(90deg, var(--slate), var(--moss), var(--amber), var(--coral), var(--sky));
+      background: linear-gradient(90deg, var(--risk), var(--amber), var(--moss), var(--blue), var(--violet));
     }
 
     a {
       color: inherit;
+    }
+
+    code {
+      background: rgba(18, 24, 33, 0.08);
+      border-radius: 4px;
+      color: #1b4f64;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.92em;
+      padding: 0.1rem 0.35rem;
+    }
+
+    pre {
+      margin: 0;
     }
 
     .shell {
@@ -63,37 +78,38 @@
     }
 
     .nav {
-      display: flex;
       align-items: center;
-      justify-content: space-between;
+      display: flex;
       gap: 24px;
-      padding: 24px 0;
+      justify-content: space-between;
+      padding: 22px 0;
+      position: relative;
+      z-index: 2;
     }
 
     .brand {
-      display: inline-flex;
       align-items: center;
-      gap: 12px;
       color: var(--ink);
-      font-weight: 800;
-      letter-spacing: 0;
+      display: inline-flex;
+      font-weight: 900;
+      gap: 12px;
       text-decoration: none;
     }
 
-    .brand-mark {
-      width: 42px;
+    .brand img {
       height: 42px;
-      flex: 0 0 auto;
       object-fit: contain;
+      width: 42px;
     }
 
     .nav-links {
-      display: flex;
       align-items: center;
-      gap: 18px;
       color: var(--muted);
-      font-size: 0.95rem;
-      font-weight: 700;
+      display: flex;
+      flex-wrap: wrap;
+      font-size: 0.94rem;
+      font-weight: 800;
+      gap: 18px;
     }
 
     .nav-links a {
@@ -107,16 +123,39 @@
     }
 
     .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1.08fr) minmax(300px, 0.92fr);
-      align-items: center;
-      gap: 48px;
-      min-height: 68vh;
-      padding: 44px 0 64px;
+      min-height: 74vh;
+      overflow: hidden;
+      padding: 34px 0 76px;
+      position: relative;
     }
 
-    .eyebrow {
-      color: var(--moss);
+    .hero::after {
+      background: linear-gradient(90deg, rgba(246, 241, 232, 0.98), rgba(246, 241, 232, 0.82) 55%, rgba(246, 241, 232, 0.18));
+      content: "";
+      inset: 0;
+      position: absolute;
+      z-index: 0;
+    }
+
+    .hero-mascot {
+      bottom: 0;
+      height: auto;
+      max-width: min(48vw, 560px);
+      position: absolute;
+      right: max(28px, calc((100vw - 1120px) / 2));
+      width: 560px;
+      z-index: 0;
+    }
+
+    .hero-content {
+      max-width: 750px;
+      padding-top: 52px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .kicker {
+      color: var(--risk);
       font-size: 0.82rem;
       font-weight: 900;
       letter-spacing: 0.08em;
@@ -133,16 +172,33 @@
 
     h1 {
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(3.5rem, 9vw, 8rem);
-      line-height: 0.9;
+      font-size: clamp(3.25rem, 7vw, 6.6rem);
       letter-spacing: 0;
+      line-height: 0.92;
       margin-bottom: 22px;
+      max-width: 820px;
+      text-wrap: balance;
+    }
+
+    h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: 0;
+      line-height: 1.08;
+      margin-bottom: 12px;
+      text-wrap: balance;
+    }
+
+    h3 {
+      font-size: 1.05rem;
+      line-height: 1.25;
+      margin-bottom: 8px;
     }
 
     .lede {
-      color: var(--slate);
+      color: var(--muted);
       font-size: clamp(1.18rem, 2vw, 1.45rem);
-      max-width: 650px;
+      max-width: 680px;
       text-wrap: balance;
     }
 
@@ -150,7 +206,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-top: 32px;
+      margin-top: 30px;
     }
 
     .button {
@@ -160,7 +216,7 @@
       border-radius: 8px;
       color: #ffffff;
       display: inline-flex;
-      font-weight: 800;
+      font-weight: 900;
       justify-content: center;
       min-height: 44px;
       padding: 10px 16px;
@@ -172,71 +228,52 @@
       color: var(--ink);
     }
 
-    .hero-visual {
+    .status-strip {
       background: var(--paper);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      box-shadow: var(--shadow);
-      display: grid;
-      min-height: 420px;
-      place-items: center;
-      padding: 28px;
+      border-bottom: 1px solid var(--line);
+      border-top: 1px solid var(--line);
     }
 
-    .packy-illustration {
-      display: block;
-      filter: drop-shadow(0 22px 28px rgba(34, 43, 54, 0.18));
-      height: auto;
-      max-width: 440px;
-      width: min(100%, 440px);
-    }
-
-    .hero-visual-caption {
+    .status-strip .shell {
+      align-items: center;
       color: var(--muted);
-      font-size: 0.9rem;
+      display: flex;
+      flex-wrap: wrap;
       font-weight: 800;
-      margin: 10px 0 0;
-      text-align: center;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
+      gap: 12px;
+      justify-content: space-between;
+      padding: 16px 0;
     }
 
-    .hero-visual-inner {
-      display: grid;
-      place-items: center;
-      height: auto;
-    }
-
-    .terminal {
-      background: #18202a;
-      border: 1px solid #2f3b49;
-      border-radius: 8px;
-      color: #e7f3dc;
-      font: 0.9rem/1.55 "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-      overflow-x: auto;
-      padding: 18px;
-      white-space: pre;
+    .pill {
+      background: rgba(72, 111, 86, 0.12);
+      border: 1px solid rgba(72, 111, 86, 0.28);
+      border-radius: 999px;
+      color: var(--moss);
+      display: inline-flex;
+      font-size: 0.84rem;
+      font-weight: 900;
+      padding: 6px 10px;
     }
 
     section {
-      padding: 56px 0;
+      padding: 62px 0;
     }
 
     .section-header {
-      max-width: 760px;
-      margin-bottom: 24px;
-    }
-
-    h2 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(2rem, 4vw, 3rem);
-      line-height: 1.05;
-      margin-bottom: 12px;
+      max-width: 780px;
+      margin-bottom: 28px;
     }
 
     .section-header p,
     .muted {
       color: var(--muted);
+    }
+
+    .band {
+      background: rgba(255, 250, 240, 0.75);
+      border-bottom: 1px solid var(--line);
+      border-top: 1px solid var(--line);
     }
 
     .grid {
@@ -245,17 +282,16 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
-    .card {
-      background: rgba(255, 250, 240, 0.88);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      min-height: 190px;
-      padding: 22px;
+    .grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .card h3 {
-      font-size: 1.05rem;
-      margin-bottom: 10px;
+    .card {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      min-height: 178px;
+      padding: 22px;
     }
 
     .card p {
@@ -263,42 +299,127 @@
       margin-bottom: 0;
     }
 
-    .band {
-      background: rgba(255, 250, 240, 0.72);
-      border-bottom: 1px solid var(--line);
-      border-top: 1px solid var(--line);
+    .risk-card {
+      border-top: 5px solid var(--risk);
+    }
+
+    .capability-card {
+      border-top: 5px solid var(--blue);
     }
 
     .split {
-      display: grid;
-      gap: 36px;
-      grid-template-columns: 0.9fr 1.1fr;
       align-items: start;
+      display: grid;
+      gap: 34px;
+      grid-template-columns: 0.9fr 1.1fr;
     }
 
-    .feature-list {
+    .terminal {
+      background: var(--code);
+      border: 1px solid #2e3947;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      color: #e6f1df;
+      font: 0.9rem/1.58 "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      overflow-x: auto;
+      padding: 18px;
+      white-space: pre-wrap;
+    }
+
+    .conversation {
       display: grid;
-      gap: 16px;
+      gap: 14px;
+    }
+
+    .bubble {
+      border-radius: 8px;
+      padding: 16px 18px;
+    }
+
+    .bubble.user {
+      background: #17202b;
+      color: #eef4ea;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      overflow-x: auto;
+    }
+
+    .bubble.packy {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: 0 12px 36px rgba(25, 32, 42, 0.08);
+    }
+
+    .bubble strong {
+      color: var(--risk);
+    }
+
+    .check-list {
+      display: grid;
+      gap: 12px;
+      list-style: none;
       margin: 0;
       padding: 0;
     }
 
-    .feature-list li {
-      background: rgba(255, 255, 255, 0.48);
+    .check-list li {
+      background: rgba(255, 255, 255, 0.66);
       border-left: 5px solid var(--amber);
       border-radius: 0 8px 8px 0;
-      list-style: none;
-      padding: 14px 18px;
+      padding: 13px 16px;
     }
 
-    .feature-list strong {
+    .flow {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .flow-step {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      min-height: 148px;
+      padding: 18px;
+      position: relative;
+    }
+
+    .flow-step span {
+      color: var(--risk);
       display: block;
-      margin-bottom: 3px;
+      font-size: 0.8rem;
+      font-weight: 900;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .callout {
+      background: #17202b;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      color: #eef4ea;
+      padding: 24px;
+    }
+
+    .callout h3 {
+      color: #ffffff;
+    }
+
+    .callout p {
+      color: #cbd8d5;
+    }
+
+    .note {
+      background: rgba(184, 71, 51, 0.1);
+      border: 1px solid rgba(184, 71, 51, 0.22);
+      border-radius: 8px;
+      color: #6f2c22;
+      font-weight: 800;
+      padding: 16px 18px;
     }
 
     footer {
       color: var(--muted);
-      padding: 36px 0 48px;
+      padding: 34px 0 46px;
     }
 
     footer .shell {
@@ -306,32 +427,42 @@
       padding-top: 24px;
     }
 
-    @media (max-width: 860px) {
+    @media (max-width: 940px) {
+      .hero::after {
+        background: linear-gradient(90deg, rgba(246, 241, 232, 0.98), rgba(246, 241, 232, 0.9));
+      }
+
+      .hero-mascot {
+        max-width: 420px;
+        opacity: 0.22;
+        right: -120px;
+      }
+
+      .split,
+      .grid,
+      .grid.two,
+      .flow {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .shell {
+        width: min(100% - 24px, 460px);
+      }
+
       .nav {
         align-items: flex-start;
         flex-direction: column;
       }
 
-      .nav-links {
-        flex-wrap: wrap;
-      }
-
-      .hero,
-      .split,
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
       .hero {
-        gap: 28px;
-        min-height: auto;
-        padding-top: 28px;
+        min-height: 0;
+        padding-bottom: 56px;
       }
-    }
 
-    @media (max-width: 520px) {
-      .shell {
-        width: min(100% - 24px, 420px);
+      .hero-content {
+        padding-top: 28px;
       }
 
       .actions {
@@ -342,9 +473,8 @@
         width: 100%;
       }
 
-      .hero-visual {
-        min-height: 0;
-        padding: 18px;
+      section {
+        padding: 46px 0;
       }
     }
   </style>
@@ -352,106 +482,207 @@
 <body>
   <nav class="shell nav" aria-label="Primary">
     <a class="brand" href="#top" aria-label="Packy home">
-      <img class="brand-mark" src="assets/packy-elephant-logo.png" alt="" width="42" height="42">
+      <img src="assets/packy-elephant-logo.png" alt="" width="42" height="42">
       <span>Packy</span>
     </a>
     <div class="nav-links" aria-label="Sections">
-      <a href="#shape">Shape</a>
-      <a href="#principles">Principles</a>
-      <a href="#agents">Agents</a>
+      <a href="#problem">Risks</a>
+      <a href="#product">Product</a>
+      <a href="#safety">Safety</a>
+      <a href="#status">Status</a>
     </div>
   </nav>
 
   <main id="top">
-    <header class="shell hero">
-      <div>
-        <p class="eyebrow">Local-first package memory for AI workflows</p>
-        <h1>Packy</h1>
+    <header class="hero">
+      <img class="hero-mascot" src="assets/packy-elephant-logo.png" alt="" width="1254" height="1254">
+      <div class="shell hero-content">
+        <p class="kicker">Early project direction</p>
+        <h1>Packy helps you install software without getting owned.</h1>
         <p class="lede">
-          A local-first AI package management system designed around durable manifests,
-          transparent installs, and user-owned state.
+          Packy is a planned local desktop AI friend for safer installs. It is designed to live in your dock, tray, or menu bar, notice risky install activity, and help you understand what a command will do before you approve it.
         </p>
         <div class="actions" aria-label="Project actions">
-          <a class="button" href="https://github.com/pierce403/packy">View Repository</a>
-          <a class="button secondary" href="#agents">Agent Guide</a>
-        </div>
-      </div>
-      <div class="hero-visual" aria-label="Packy elephant logo">
-        <div class="hero-visual-inner">
-          <img class="packy-illustration" src="assets/packy-elephant-logo.png" alt="Packy elephant mascot holding a package" width="1254" height="1254">
-          <p class="hero-visual-caption">Local packages, handled gently</p>
+          <a class="button" href="https://github.com/pierce403/packy">View GitHub Repo</a>
+          <a class="button secondary" href="#status">Prototype In Progress</a>
         </div>
       </div>
     </header>
 
-    <section id="shape" class="band">
+    <div class="status-strip" aria-label="Project status">
+      <div class="shell">
+        <span class="pill">Local-first by default</span>
+        <span>No install history, package list, shell command, or machine state should leave the device unless the user opts in.</span>
+      </div>
+    </div>
+
+    <section id="problem">
       <div class="shell">
         <div class="section-header">
-          <h2>Built For Local Control</h2>
-          <p>Packy starts from the idea that AI tooling should install, cache, and explain packages where the user can inspect them.</p>
+          <h2>Modern install instructions ask for a lot of trust.</h2>
+          <p>
+            A README tells you to paste a command. A package manager downloads a dependency tree. A postinstall script edits your shell profile. Packy exists for the moment before you hit enter.
+          </p>
         </div>
         <div class="grid">
-          <article class="card">
-            <h3>Local-first registry state</h3>
-            <p>Manifests, lockfiles, and package metadata should stay readable and portable on the local machine.</p>
+          <article class="card risk-card">
+            <h3>Remote scripts</h3>
+            <p>Install snippets like <code>curl | sh</code> can run changing code before you have inspected it.</p>
           </article>
-          <article class="card">
-            <h3>Agent-aware installs</h3>
-            <p>AI assistants should be able to propose, verify, and record dependency changes without hiding the plan.</p>
+          <article class="card risk-card">
+            <h3>Registry traps</h3>
+            <p>Typosquats, new maintainers, suspicious postinstall scripts, and risky dependency chains can hide inside normal package flows.</p>
           </article>
-          <article class="card">
-            <h3>Durable package memory</h3>
-            <p>Packy should remember what was installed, why it changed, and how to reproduce that state later.</p>
+          <article class="card risk-card">
+            <h3>System changes</h3>
+            <p>Unsigned binaries, global npm installs, pip-as-root, new daemons, services, launch agents, and PATH edits deserve a second look.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="principles">
+    <section id="product" class="band">
       <div class="shell split">
         <div class="section-header">
-          <h2>Project Principles</h2>
-          <p>These are the constraints future code should satisfy as Packy grows from a project page into a real package manager.</p>
+          <h2>A dock companion for install decisions.</h2>
+          <p>
+            Packy's primary UX is planned as a desktop companion, not a CLI-first tool. The planned companion loop is to notice install-related activity, explain the risk in plain language, and offer safer paths without turning every install into a lecture.
+          </p>
         </div>
-        <ul class="feature-list">
-          <li><strong>User-owned state</strong> Prefer files and stores that users can back up, diff, and move.</li>
-          <li><strong>Explainable changes</strong> Every AI-assisted package operation should leave an auditable reason.</li>
-          <li><strong>Offline-friendly flows</strong> Cached metadata and packages should keep common workflows moving without network access.</li>
-          <li><strong>Small, inspectable tools</strong> Favor plain manifests and CLI behavior over opaque background automation.</li>
+        <ul class="check-list">
+          <li><strong>Notice:</strong> planned detection for install commands, downloaded installers, registry operations, and package-manager prompts.</li>
+          <li><strong>Inspect:</strong> planned metadata fetches, script reads, install-path comparisons, and signature or advisory checks when available.</li>
+          <li><strong>Explain:</strong> planned summaries of what changes, what persists, what runs as root, and what safer options exist.</li>
+          <li><strong>Ask:</strong> planned pauses before risky steps so the user understands and approves the path.</li>
         </ul>
       </div>
     </section>
 
-    <section class="band" aria-labelledby="current-shape-title">
+    <section aria-labelledby="example-title">
       <div class="shell split">
-        <div class="section-header">
-          <h2 id="current-shape-title">Current Shape</h2>
-          <p>Packy is scaffolded as a static public project page. Implementation code should land with matching docs and verified commands.</p>
+        <div>
+          <p class="kicker">Example interaction</p>
+          <h2 id="example-title">Packy should speak up at the risky moment.</h2>
+          <p class="muted">
+            This is illustrative product direction, not a shipped workflow yet. The goal is concrete: warn when an install pattern deserves inspection, then help the user choose a safer path.
+          </p>
         </div>
-        <pre class="terminal">packy/
-  index.html              # GitHub Pages entry point
-  README.md               # project overview
-  AGENTS.md               # canonical agent instructions
-  assets/packy-elephant-logo.png
-  MEMORY.md               # durable notes map
-  SKILLS.md               # repo-local skill catalog
-  skills/curator/         # skill maintenance workflow</pre>
+        <div class="conversation" aria-label="Example Packy warning">
+          <div class="bubble user">curl -fsSL https://example.com/install.sh | sh</div>
+          <div class="bubble packy">
+            <p><strong>Packy noticed a remote shell installer.</strong></p>
+            <p>This command downloads a script and runs it immediately. Want me to fetch it first, summarize what it changes, look for package-manager alternatives, and check whether signatures or release checksums are available?</p>
+          </div>
+          <pre class="terminal">Planned safer options:
+1. Download and inspect the script before running it.
+2. Prefer a signed package or official package manager when available.
+3. Run with the least privilege needed.
+4. Record before/after changes if you continue.</pre>
+        </div>
       </div>
     </section>
 
-    <section id="agents">
+    <section class="band" aria-labelledby="capabilities-title">
+      <div class="shell">
+        <div class="section-header">
+          <p class="kicker">Planned capabilities</p>
+          <h2 id="capabilities-title">Concrete checks, not vague AI vibes.</h2>
+          <p>These are design goals for the implementation. They should stay phrased as planned until code backs them.</p>
+        </div>
+        <div class="grid">
+          <article class="card capability-card">
+            <h3>Inspect install commands</h3>
+            <p>Parse shell snippets, package-manager commands, installers, flags, privilege escalation, and remote execution patterns.</p>
+          </article>
+          <article class="card capability-card">
+            <h3>Compare install paths</h3>
+            <p>Explain differences between Homebrew, apt, npm, pip, official downloads, signed packages, and ad hoc scripts.</p>
+          </article>
+          <article class="card capability-card">
+            <h3>Explain supply-chain risk</h3>
+            <p>Call out typosquatting, maintainer churn, dependency depth, lifecycle scripts, binary provenance, and risky defaults.</p>
+          </article>
+          <article class="card capability-card">
+            <h3>Check facts when available</h3>
+            <p>Use package metadata, advisories, signatures, checksums, release pages, and local caches rather than model memory alone.</p>
+          </article>
+          <article class="card capability-card">
+            <h3>Watch recent installs</h3>
+            <p>Track local install activity and produce before/after reports without sending machine state to a cloud service by default.</p>
+          </article>
+          <article class="card capability-card">
+            <h3>Keep state local</h3>
+            <p>Store install history, package lists, command context, and risk notes on the device unless the user explicitly chooses otherwise.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="safety" aria-labelledby="safety-title">
+      <div class="shell">
+        <div class="section-header">
+          <p class="kicker">Safety model</p>
+          <h2 id="safety-title">Suggest, plan, approve, execute.</h2>
+          <p>
+            Packy should be useful without becoming an unsupervised root shell. The assistant can explain and propose, but deterministic policy should gate privileged actions.
+          </p>
+        </div>
+        <div class="flow" aria-label="Planned safety flow">
+          <article class="flow-step">
+            <span>01 Suggest</span>
+            <h3>Notice a risky pattern</h3>
+            <p class="muted">Remote shell installers, global writes, unsigned binaries, and hidden lifecycle hooks get flagged.</p>
+          </article>
+          <article class="flow-step">
+            <span>02 Plan</span>
+            <h3>Build an inspectable path</h3>
+            <p class="muted">Packy explains what it wants to inspect, what it can verify, and where uncertainty remains.</p>
+          </article>
+          <article class="flow-step">
+            <span>03 Approve</span>
+            <h3>Ask before risky steps</h3>
+            <p class="muted">The user chooses whether to inspect, use a safer alternative, continue, or stop.</p>
+          </article>
+          <article class="flow-step">
+            <span>04 Execute</span>
+            <h3>Never blindly shell out</h3>
+            <p class="muted">Privileged commands should require explicit approval and policy checks, not LLM impulse.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="local-ai-title">
       <div class="shell split">
         <div class="section-header">
-          <h2>Agent Etiquette</h2>
-          <p>Packy follows the `recurse.bot` convention: keep `AGENTS.md` canonical, verify commands, and commit useful operating knowledge where future agents will read it.</p>
+          <p class="kicker">Local AI</p>
+          <h2 id="local-ai-title">Helpful without default cloud exposure.</h2>
+          <p>
+            The design center is local-first privacy. Packy should avoid uploading install history, package lists, shell commands, or machine state by default.
+          </p>
+        </div>
+        <div class="callout">
+          <h3>Planned architecture direction</h3>
+          <p>A tiny local model can classify install-related activity and decide when to notify. A larger local model can be optional for deeper explanations. Tools, retrieval, and cache should provide current package facts when model memory is not enough.</p>
+          <p>Cloud services may become optional later, but they should not be required for the core private install-safety loop.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="status" aria-labelledby="status-title">
+      <div class="shell split">
+        <div>
+          <p class="kicker">Status</p>
+          <h2 id="status-title">Early project. Static site for now.</h2>
+          <p class="muted">
+            This repository currently hosts a static GitHub Pages site and repo-local agent guidance. The implementation is still to come, so the page describes the intended product direction rather than shipped functionality.
+          </p>
         </div>
         <div>
-          <p class="muted">
-            Future agents should read the repo guidance before making broad changes, avoid inventing shipped features, and update the skill catalog only when a workflow is likely to repeat.
-          </p>
+          <p class="note">Future copy should not claim Packy already watches installs, executes commands, verifies signatures, or blocks risky behavior until those capabilities exist in code.</p>
           <div class="actions">
-            <a class="button" href="AGENTS.md">Read AGENTS.md</a>
-            <a class="button secondary" href="SKILLS.md">Read SKILLS.md</a>
+            <a class="button" href="https://github.com/pierce403/packy">Follow Along On GitHub</a>
+            <a class="button secondary" href="AGENTS.md">Read Agent Notes</a>
           </div>
         </div>
       </div>
@@ -460,7 +691,7 @@
 
   <footer>
     <div class="shell">
-      <p>Packy is a local-first AI package management project. Published from `index.html` with GitHub Pages.</p>
+      <p>Packy is an early local-first desktop package-safety assistant project. Published from <code>index.html</code> with GitHub Pages.</p>
     </div>
   </footer>
 </body>

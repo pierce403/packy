@@ -6,6 +6,8 @@ Packy is a local-first AI package management system with an elephant theme. The 
 
 The GitHub Pages entry point is [index.html](index.html). It is a plain static page with no build step.
 
+Production URL: <https://packy.bot/>
+
 Preview locally by opening `index.html` in a browser.
 
 ## Agent Setup

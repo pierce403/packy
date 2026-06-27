@@ -1,0 +1,4 @@
+interface:
+  display_name: "Curator"
+  short_description: "Maintain the Packy skill library"
+  default_prompt: "Use $curator to decide whether a Packy lesson should become a new skill, an update, or a prune."

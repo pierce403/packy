@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Packy - Local-first AI Package Management</title>
+  <meta name="description" content="Packy is a local-first AI package management system with an elephant theme.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Packy">
+  <meta property="og:description" content="A local-first AI package management system with durable manifests and user-owned state.">
+  <meta name="theme-color" content="#f8f3e8">
+  <style>
+    :root {
+      --ink: #19232f;
+      --muted: #5e6874;
+      --paper: #fffaf0;
+      --canvas: #f4f1e8;
+      --line: #d9d1c2;
+      --slate: #40556b;
+      --moss: #557b4f;
+      --amber: #c98525;
+      --coral: #c9583d;
+      --sky: #5c88a6;
+      --shadow: 0 22px 60px rgba(34, 43, 54, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(90deg, rgba(64, 85, 107, 0.08) 1px, transparent 1px) 0 0 / 42px 42px,
+        linear-gradient(0deg, rgba(85, 123, 79, 0.07) 1px, transparent 1px) 0 0 / 42px 42px,
+        var(--canvas);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    body::before {
+      content: "";
+      display: block;
+      height: 8px;
+      background: linear-gradient(90deg, var(--slate), var(--moss), var(--amber), var(--coral), var(--sky));
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .shell {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 24px 0;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--ink);
+      font-weight: 800;
+      letter-spacing: 0;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      flex: 0 0 auto;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(300px, 0.92fr);
+      align-items: center;
+      gap: 48px;
+      min-height: 68vh;
+      padding: 44px 0 64px;
+    }
+
+    .eyebrow {
+      color: var(--moss);
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      margin: 0 0 14px;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3.5rem, 9vw, 8rem);
+      line-height: 0.9;
+      letter-spacing: 0;
+      margin-bottom: 22px;
+    }
+
+    .lede {
+      color: var(--slate);
+      font-size: clamp(1.18rem, 2vw, 1.45rem);
+      max-width: 650px;
+      text-wrap: balance;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .button {
+      align-items: center;
+      background: var(--ink);
+      border: 2px solid var(--ink);
+      border-radius: 8px;
+      color: #ffffff;
+      display: inline-flex;
+      font-weight: 800;
+      justify-content: center;
+      min-height: 44px;
+      padding: 10px 16px;
+      text-decoration: none;
+    }
+
+    .button.secondary {
+      background: transparent;
+      color: var(--ink);
+    }
+
+    .hero-visual {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 28px;
+    }
+
+    .packy-illustration {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .terminal {
+      background: #18202a;
+      border: 1px solid #2f3b49;
+      border-radius: 8px;
+      color: #e7f3dc;
+      font: 0.9rem/1.55 "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      overflow-x: auto;
+      padding: 18px;
+      white-space: pre;
+    }
+
+    section {
+      padding: 56px 0;
+    }
+
+    .section-header {
+      max-width: 760px;
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.05;
+      margin-bottom: 12px;
+    }
+
+    .section-header p,
+    .muted {
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .card {
+      background: rgba(255, 250, 240, 0.88);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      min-height: 190px;
+      padding: 22px;
+    }
+
+    .card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+
+    .band {
+      background: rgba(255, 250, 240, 0.72);
+      border-bottom: 1px solid var(--line);
+      border-top: 1px solid var(--line);
+    }
+
+    .split {
+      display: grid;
+      gap: 36px;
+      grid-template-columns: 0.9fr 1.1fr;
+      align-items: start;
+    }
+
+    .feature-list {
+      display: grid;
+      gap: 16px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .feature-list li {
+      background: rgba(255, 255, 255, 0.48);
+      border-left: 5px solid var(--amber);
+      border-radius: 0 8px 8px 0;
+      list-style: none;
+      padding: 14px 18px;
+    }
+
+    .feature-list strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    footer {
+      color: var(--muted);
+      padding: 36px 0 48px;
+    }
+
+    footer .shell {
+      border-top: 1px solid var(--line);
+      padding-top: 24px;
+    }
+
+    @media (max-width: 860px) {
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+      }
+
+      .hero,
+      .split,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        gap: 28px;
+        min-height: auto;
+        padding-top: 28px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .shell {
+        width: min(100% - 24px, 420px);
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .hero-visual {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="shell nav" aria-label="Primary">
+    <a class="brand" href="#top" aria-label="Packy home">
+      <svg class="brand-mark" viewBox="0 0 80 80" role="img" aria-label="Packy elephant mark" xmlns="http://www.w3.org/2000/svg">
+        <rect x="8" y="16" width="58" height="42" rx="12" fill="#fffaf0" stroke="#19232f" stroke-width="4"/>
+        <path d="M18 35c-10 2-12 14-4 20 6 4 14 1 15-7" fill="none" stroke="#40556b" stroke-width="6" stroke-linecap="round"/>
+        <path d="M53 35c10 2 12 14 4 20-6 4-14 1-15-7" fill="none" stroke="#40556b" stroke-width="6" stroke-linecap="round"/>
+        <path d="M36 42c0 14 15 12 13 24" fill="none" stroke="#557b4f" stroke-width="7" stroke-linecap="round"/>
+        <circle cx="29" cy="35" r="3.5" fill="#19232f"/>
+        <circle cx="47" cy="35" r="3.5" fill="#19232f"/>
+        <path d="M23 18 17 8M54 18l6-10" stroke="#c98525" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+      <span>Packy</span>
+    </a>
+    <div class="nav-links" aria-label="Sections">
+      <a href="#shape">Shape</a>
+      <a href="#principles">Principles</a>
+      <a href="#agents">Agents</a>
+    </div>
+  </nav>
+
+  <main id="top">
+    <header class="shell hero">
+      <div>
+        <p class="eyebrow">Local-first package memory for AI workflows</p>
+        <h1>Packy</h1>
+        <p class="lede">
+          A local-first AI package management system designed around durable manifests,
+          transparent installs, and user-owned state.
+        </p>
+        <div class="actions" aria-label="Project actions">
+          <a class="button" href="https://github.com/pierce403/packy">View Repository</a>
+          <a class="button secondary" href="#agents">Agent Guide</a>
+        </div>
+      </div>
+      <div class="hero-visual" aria-label="Packy package flow illustration">
+        <svg class="packy-illustration" viewBox="0 0 620 520" role="img" aria-labelledby="packy-title packy-desc" xmlns="http://www.w3.org/2000/svg">
+          <title id="packy-title">Packy stores packages locally before syncing with agents</title>
+          <desc id="packy-desc">An elephant-shaped package vault connects manifests, local cache, and agent installs.</desc>
+          <rect x="40" y="52" width="540" height="396" rx="28" fill="#f4f1e8" stroke="#d9d1c2" stroke-width="4"/>
+          <path d="M178 213c-55 0-96 36-96 84 0 52 43 87 102 87h180c74 0 126-44 126-106 0-64-55-110-131-110H224c-27 0-46 18-46 45Z" fill="#fffaf0" stroke="#19232f" stroke-width="8"/>
+          <path d="M108 255c-36-4-62 17-62 49 0 29 21 48 50 48 22 0 39-12 47-31" fill="none" stroke="#40556b" stroke-width="14" stroke-linecap="round"/>
+          <path d="M456 254c42 8 68 36 68 72 0 40-31 67-73 67-30 0-54-15-66-40" fill="none" stroke="#40556b" stroke-width="14" stroke-linecap="round"/>
+          <path d="M292 282c0 63 80 55 76 119" fill="none" stroke="#557b4f" stroke-width="18" stroke-linecap="round"/>
+          <path d="M358 399c18 7 40 2 52-14" fill="none" stroke="#557b4f" stroke-width="12" stroke-linecap="round"/>
+          <circle cx="232" cy="260" r="9" fill="#19232f"/>
+          <circle cx="337" cy="260" r="9" fill="#19232f"/>
+          <path d="M249 310c24 16 58 16 82 0" fill="none" stroke="#19232f" stroke-width="8" stroke-linecap="round"/>
+          <rect x="136" y="112" width="112" height="80" rx="12" fill="#40556b"/>
+          <path d="M154 139h76M154 164h48" stroke="#fffaf0" stroke-width="9" stroke-linecap="round"/>
+          <rect x="272" y="96" width="128" height="96" rx="14" fill="#c98525"/>
+          <path d="M300 132h72M300 160h46" stroke="#fffaf0" stroke-width="9" stroke-linecap="round"/>
+          <rect x="423" y="120" width="88" height="72" rx="12" fill="#c9583d"/>
+          <path d="M442 146h50M442 169h30" stroke="#fffaf0" stroke-width="8" stroke-linecap="round"/>
+          <path d="M192 193v32M336 193v28M467 193v39" stroke="#19232f" stroke-width="6" stroke-dasharray="10 10" stroke-linecap="round"/>
+          <path d="M214 430h-70M392 430h86" stroke="#19232f" stroke-width="8" stroke-linecap="round"/>
+          <path d="M182 430v24M428 430v24" stroke="#19232f" stroke-width="8" stroke-linecap="round"/>
+          <path d="M202 168l34 17M384 164l32-10" stroke="#19232f" stroke-width="5" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </header>
+
+    <section id="shape" class="band">
+      <div class="shell">
+        <div class="section-header">
+          <h2>Built For Local Control</h2>
+          <p>Packy starts from the idea that AI tooling should install, cache, and explain packages where the user can inspect them.</p>
+        </div>
+        <div class="grid">
+          <article class="card">
+            <h3>Local-first registry state</h3>
+            <p>Manifests, lockfiles, and package metadata should stay readable and portable on the local machine.</p>
+          </article>
+          <article class="card">
+            <h3>Agent-aware installs</h3>
+            <p>AI assistants should be able to propose, verify, and record dependency changes without hiding the plan.</p>
+          </article>
+          <article class="card">
+            <h3>Durable package memory</h3>
+            <p>Packy should remember what was installed, why it changed, and how to reproduce that state later.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="principles">
+      <div class="shell split">
+        <div class="section-header">
+          <h2>Project Principles</h2>
+          <p>These are the constraints future code should satisfy as Packy grows from a project page into a real package manager.</p>
+        </div>
+        <ul class="feature-list">
+          <li><strong>User-owned state</strong> Prefer files and stores that users can back up, diff, and move.</li>
+          <li><strong>Explainable changes</strong> Every AI-assisted package operation should leave an auditable reason.</li>
+          <li><strong>Offline-friendly flows</strong> Cached metadata and packages should keep common workflows moving without network access.</li>
+          <li><strong>Small, inspectable tools</strong> Favor plain manifests and CLI behavior over opaque background automation.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="band" aria-labelledby="current-shape-title">
+      <div class="shell split">
+        <div class="section-header">
+          <h2 id="current-shape-title">Current Shape</h2>
+          <p>Packy is scaffolded as a static public project page. Implementation code should land with matching docs and verified commands.</p>
+        </div>
+        <pre class="terminal">packy/
+  index.html              # GitHub Pages entry point
+  README.md               # project overview
+  AGENTS.md               # canonical agent instructions
+  MEMORY.md               # durable notes map
+  SKILLS.md               # repo-local skill catalog
+  skills/curator/         # skill maintenance workflow</pre>
+      </div>
+    </section>
+
+    <section id="agents">
+      <div class="shell split">
+        <div class="section-header">
+          <h2>Agent Etiquette</h2>
+          <p>Packy follows the `recurse.bot` convention: keep `AGENTS.md` canonical, verify commands, and commit useful operating knowledge where future agents will read it.</p>
+        </div>
+        <div>
+          <p class="muted">
+            Future agents should read the repo guidance before making broad changes, avoid inventing shipped features, and update the skill catalog only when a workflow is likely to repeat.
+          </p>
+          <div class="actions">
+            <a class="button" href="AGENTS.md">Read AGENTS.md</a>
+            <a class="button secondary" href="SKILLS.md">Read SKILLS.md</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell">
+      <p>Packy is a local-first AI package management project. Published from `index.html` with GitHub Pages.</p>
+    </div>
+  </footer>
+</body>
+</html>

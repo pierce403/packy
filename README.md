@@ -8,6 +8,8 @@ The GitHub Pages entry point is [index.html](index.html). It is a plain static p
 
 Production URL: <https://packy.bot/>
 
+Primary logo asset: [assets/packy-elephant-logo.png](assets/packy-elephant-logo.png)
+
 Preview locally by opening `index.html` in a browser.
 
 ## Agent Setup

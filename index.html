@@ -6,9 +6,11 @@
   <title>Packy - Local-first AI Package Management</title>
   <meta name="description" content="Packy is a local-first AI package management system with an elephant theme.">
   <link rel="canonical" href="https://packy.bot/">
+  <link rel="icon" type="image/png" href="assets/packy-elephant-logo.png">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Packy">
   <meta property="og:description" content="A local-first AI package management system with durable manifests and user-owned state.">
+  <meta property="og:image" content="https://packy.bot/assets/packy-elephant-logo.png">
   <meta name="theme-color" content="#f8f3e8">
   <style>
     :root {
@@ -82,6 +84,7 @@
       width: 42px;
       height: 42px;
       flex: 0 0 auto;
+      object-fit: contain;
     }
 
     .nav-links {
@@ -174,12 +177,33 @@
       border: 1px solid var(--line);
       border-radius: 8px;
       box-shadow: var(--shadow);
+      display: grid;
+      min-height: 420px;
+      place-items: center;
       padding: 28px;
     }
 
     .packy-illustration {
       display: block;
-      width: 100%;
+      filter: drop-shadow(0 22px 28px rgba(34, 43, 54, 0.18));
+      height: auto;
+      max-width: 440px;
+      width: min(100%, 440px);
+    }
+
+    .hero-visual-caption {
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 800;
+      margin: 10px 0 0;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .hero-visual-inner {
+      display: grid;
+      place-items: center;
       height: auto;
     }
 
@@ -319,6 +343,7 @@
       }
 
       .hero-visual {
+        min-height: 0;
         padding: 18px;
       }
     }
@@ -327,15 +352,7 @@
 <body>
   <nav class="shell nav" aria-label="Primary">
     <a class="brand" href="#top" aria-label="Packy home">
-      <svg class="brand-mark" viewBox="0 0 80 80" role="img" aria-label="Packy elephant mark" xmlns="http://www.w3.org/2000/svg">
-        <rect x="8" y="16" width="58" height="42" rx="12" fill="#fffaf0" stroke="#19232f" stroke-width="4"/>
-        <path d="M18 35c-10 2-12 14-4 20 6 4 14 1 15-7" fill="none" stroke="#40556b" stroke-width="6" stroke-linecap="round"/>
-        <path d="M53 35c10 2 12 14 4 20-6 4-14 1-15-7" fill="none" stroke="#40556b" stroke-width="6" stroke-linecap="round"/>
-        <path d="M36 42c0 14 15 12 13 24" fill="none" stroke="#557b4f" stroke-width="7" stroke-linecap="round"/>
-        <circle cx="29" cy="35" r="3.5" fill="#19232f"/>
-        <circle cx="47" cy="35" r="3.5" fill="#19232f"/>
-        <path d="M23 18 17 8M54 18l6-10" stroke="#c98525" stroke-width="4" stroke-linecap="round"/>
-      </svg>
+      <img class="brand-mark" src="assets/packy-elephant-logo.png" alt="" width="42" height="42">
       <span>Packy</span>
     </a>
     <div class="nav-links" aria-label="Sections">
@@ -359,30 +376,11 @@
           <a class="button secondary" href="#agents">Agent Guide</a>
         </div>
       </div>
-      <div class="hero-visual" aria-label="Packy package flow illustration">
-        <svg class="packy-illustration" viewBox="0 0 620 520" role="img" aria-labelledby="packy-title packy-desc" xmlns="http://www.w3.org/2000/svg">
-          <title id="packy-title">Packy stores packages locally before syncing with agents</title>
-          <desc id="packy-desc">An elephant-shaped package vault connects manifests, local cache, and agent installs.</desc>
-          <rect x="40" y="52" width="540" height="396" rx="28" fill="#f4f1e8" stroke="#d9d1c2" stroke-width="4"/>
-          <path d="M178 213c-55 0-96 36-96 84 0 52 43 87 102 87h180c74 0 126-44 126-106 0-64-55-110-131-110H224c-27 0-46 18-46 45Z" fill="#fffaf0" stroke="#19232f" stroke-width="8"/>
-          <path d="M108 255c-36-4-62 17-62 49 0 29 21 48 50 48 22 0 39-12 47-31" fill="none" stroke="#40556b" stroke-width="14" stroke-linecap="round"/>
-          <path d="M456 254c42 8 68 36 68 72 0 40-31 67-73 67-30 0-54-15-66-40" fill="none" stroke="#40556b" stroke-width="14" stroke-linecap="round"/>
-          <path d="M292 282c0 63 80 55 76 119" fill="none" stroke="#557b4f" stroke-width="18" stroke-linecap="round"/>
-          <path d="M358 399c18 7 40 2 52-14" fill="none" stroke="#557b4f" stroke-width="12" stroke-linecap="round"/>
-          <circle cx="232" cy="260" r="9" fill="#19232f"/>
-          <circle cx="337" cy="260" r="9" fill="#19232f"/>
-          <path d="M249 310c24 16 58 16 82 0" fill="none" stroke="#19232f" stroke-width="8" stroke-linecap="round"/>
-          <rect x="136" y="112" width="112" height="80" rx="12" fill="#40556b"/>
-          <path d="M154 139h76M154 164h48" stroke="#fffaf0" stroke-width="9" stroke-linecap="round"/>
-          <rect x="272" y="96" width="128" height="96" rx="14" fill="#c98525"/>
-          <path d="M300 132h72M300 160h46" stroke="#fffaf0" stroke-width="9" stroke-linecap="round"/>
-          <rect x="423" y="120" width="88" height="72" rx="12" fill="#c9583d"/>
-          <path d="M442 146h50M442 169h30" stroke="#fffaf0" stroke-width="8" stroke-linecap="round"/>
-          <path d="M192 193v32M336 193v28M467 193v39" stroke="#19232f" stroke-width="6" stroke-dasharray="10 10" stroke-linecap="round"/>
-          <path d="M214 430h-70M392 430h86" stroke="#19232f" stroke-width="8" stroke-linecap="round"/>
-          <path d="M182 430v24M428 430v24" stroke="#19232f" stroke-width="8" stroke-linecap="round"/>
-          <path d="M202 168l34 17M384 164l32-10" stroke="#19232f" stroke-width="5" stroke-linecap="round"/>
-        </svg>
+      <div class="hero-visual" aria-label="Packy elephant logo">
+        <div class="hero-visual-inner">
+          <img class="packy-illustration" src="assets/packy-elephant-logo.png" alt="Packy elephant mascot holding a package" width="1254" height="1254">
+          <p class="hero-visual-caption">Local packages, handled gently</p>
+        </div>
       </div>
     </header>
 
@@ -434,6 +432,7 @@
   index.html              # GitHub Pages entry point
   README.md               # project overview
   AGENTS.md               # canonical agent instructions
+  assets/packy-elephant-logo.png
   MEMORY.md               # durable notes map
   SKILLS.md               # repo-local skill catalog
   skills/curator/         # skill maintenance workflow</pre>

@@ -14,6 +14,7 @@ Start here, then search indexed memory before important Packy work.
 ## Notes
 
 - 2026-06-27: Packy starts as a static GitHub Pages project page for a local-first AI package management system with an elephant theme.
+- 2026-06-27: Primary site logo is `assets/packy-elephant-logo.png`, generated with the Codex image generator and processed as a transparent PNG.
 
 ## People
 

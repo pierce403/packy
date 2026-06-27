@@ -2,7 +2,7 @@
 
 Packy is an early local-first desktop AI friend for safer software installs. The intended product is a dock/tray companion that helps users inspect package-manager commands, installers, scripts, and software supply-chain risk before approving risky steps.
 
-The current repository is still a static GitHub Pages site plus agent operating notes. Do not describe install-watching, package verification, command execution, signature checks, or blocking behavior as shipped until implementation code exists.
+The current repository contains the static GitHub Pages site, agent operating notes, an architecture document, and a first dependency-free command-risk analyzer. Do not describe install-watching, package verification, signature checks, desktop notifications, or blocking behavior as shipped until implementation code exists.
 
 ## Project Site
 
@@ -13,6 +13,21 @@ Production URL: <https://packy.bot/>
 Primary logo asset: [assets/packy-elephant-logo.png](assets/packy-elephant-logo.png)
 
 Preview locally by opening `index.html` in a browser.
+
+## Architecture
+
+Read [ARCHITECTURE.md](ARCHITECTURE.md) for the current architecture map, planned desktop assistant scope, security model, local data-store direction, and roadmap.
+
+## Prototype Analyzer
+
+The first implementation slice is a local, deterministic analyzer for install command text. It does not execute commands, fetch URLs, inspect the host system, or call a model.
+
+```bash
+python3 -m packy inspect 'brew install jq'
+python3 -m packy inspect --json 'sudo npm install -g example'
+```
+
+High and critical findings intentionally return exit code `1` so scripts can gate risky commands.
 
 ## Product Direction
 
@@ -30,6 +45,7 @@ Preview locally by opening `index.html` in a browser.
 ## Verification
 
 ```bash
+python3 -m unittest
 python3 /home/pierce/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/curator
 xmllint --html --noout index.html
 git diff --check

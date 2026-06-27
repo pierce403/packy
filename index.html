@@ -592,7 +592,7 @@
         <div class="grid">
           <article class="card capability-card">
             <h3>Inspect install commands</h3>
-            <p>Parse shell snippets, package-manager commands, installers, flags, privilege escalation, and remote execution patterns.</p>
+            <p>A first prototype now parses command text for common risky patterns. Deeper shell parsing and package-manager plans are planned.</p>
           </article>
           <article class="card capability-card">
             <h3>Compare install paths</h3>
@@ -675,11 +675,11 @@
           <p class="kicker">Status</p>
           <h2 id="status-title">Early project. Static site for now.</h2>
           <p class="muted">
-            This repository currently hosts a static GitHub Pages site and repo-local agent guidance. The implementation is still to come, so the page describes the intended product direction rather than shipped functionality.
+            This repository currently hosts a static GitHub Pages site, repo-local agent guidance, an architecture document, and a first deterministic command-risk analyzer. The desktop companion implementation is still to come, so the page distinguishes current code from intended product direction.
           </p>
         </div>
         <div>
-          <p class="note">Future copy should not claim Packy already watches installs, executes commands, verifies signatures, or blocks risky behavior until those capabilities exist in code.</p>
+          <p class="note">Current code can inspect command text only. Future copy should not claim Packy already watches installs, executes commands, verifies signatures, or blocks risky behavior until those capabilities exist in code.</p>
           <div class="actions">
             <a class="button" href="https://github.com/pierce403/packy">Follow Along On GitHub</a>
             <a class="button secondary" href="AGENTS.md">Read Agent Notes</a>

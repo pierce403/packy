@@ -31,11 +31,15 @@ When this file is first read with the human, introduce yourself by name if you h
 
 ## Project Overview
 
-This repository currently hosts a static GitHub Pages site for Packy. The page describes the intended product direction: a local-first desktop package-safety assistant. Implementation code has not landed yet, so public copy must be explicit when something is planned rather than shipped.
+This repository currently hosts a static GitHub Pages site for Packy plus a first dependency-free command-risk analyzer. The page describes the intended product direction: a local-first desktop package-safety assistant. Desktop companion code has not landed yet, so public copy must be explicit when something is planned rather than shipped.
 
 Important files:
 
 - `index.html`: static public page served by GitHub Pages
+- `ARCHITECTURE.md`: architecture map, planned scope, security model, and roadmap
+- `packy/analyzer.py`: current side-effect-free install command risk analyzer
+- `packy/__main__.py`: current `python3 -m packy inspect ...` CLI wrapper
+- `tests/test_analyzer.py`: unit tests for analyzer rules
 - `README.md`: short project overview and verification commands
 - `AGENTS.md`: canonical agent instructions
 - `MEMORY.md`: compact map for durable notes
@@ -47,6 +51,7 @@ Important files:
 There is no build step yet. Validate the current repo with:
 
 ```bash
+python3 -m unittest
 python3 /home/pierce/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/curator
 xmllint --html --noout index.html
 git diff --check
@@ -54,9 +59,19 @@ git diff --check
 
 Open `index.html` directly in a browser for local preview.
 
+Run the current analyzer locally with:
+
+```bash
+python3 -m packy inspect 'brew install jq'
+python3 -m packy inspect --json 'sudo npm install -g example'
+```
+
+High and critical analyzer findings return exit code `1` by design.
+
 ## Coding Conventions
 
 - Prefer static, dependency-free files until Packy needs real application code.
+- Keep prototype core logic side-effect free by default: analyzing a command must not execute it, fetch URLs, or inspect host state.
 - Keep public copy concrete: local-first privacy, desktop/dock companion UX, install inspection, package metadata, signatures, advisories, and supply-chain risk.
 - Phrase unimplemented capabilities as "planned", "designed to", "aims to", or "early direction".
 - Use the elephant mascot as branding and visual identity, while keeping security value obvious.
@@ -65,7 +80,8 @@ Open `index.html` directly in a browser for local preview.
 
 ## Known Issues & Solutions
 
-- Packy is scaffolded as a public project page. There is no package-manager implementation yet.
+- Packy still has no desktop companion, package-manager integration, install watcher, or package verification implementation. The only product-code slice is the deterministic command-text analyzer.
+- The current analyzer only inspects command text with deterministic rules. It does not watch installs, verify packages, execute commands, check signatures, query advisories, run local models, or enforce policy gates.
 - The project should not describe install-watching, registry checks, command execution, signature verification, advisory lookups, local models, or policy gates as shipped until code backs them.
 - The old generic "AI package management system" landing page was a placeholder and should not be preserved as product direction.
 - The GitHub CLI may need to run outside the sandbox on this machine because `gh` is installed through snap.
